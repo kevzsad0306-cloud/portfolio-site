@@ -1,0 +1,136 @@
+/* ================= General Styles ================= */
+body {
+    font-family: 'Montserrat', Arial, sans-serif; /* Modern font */
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #222;
+}
+
+/* ================= Header ================= */
+header {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #1a1a1a; /* Dark header */
+    color: #fff; /* White text */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+/* ================= Sections & Headings ================= */
+section {
+    padding: 60px 10%; /* Step 4: nice spacing for polished look */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 50px; /* Space below headings */
+    color: #333;
+}
+
+/* Paragraph spacing in projects */
+.project p {
+    margin-top: 10px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* ================= Portfolio Cards ================= */
+.projects {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.project {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 300px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    transition: transform 0.3s;
+}
+
+.project h3 {
+    color: #ff6f61; /* Accent color for project titles */
+}
+
+.project:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+
+/* ================= About & Contact ================= */
+#about p, #contact p {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* ================= Mobile-Friendly Styles ================= */
+@media (max-width: 768px) {
+
+    /* Shrink header text */
+    header h1 {
+        font-size: 2em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    /* Reduce padding for sections */
+    section {
+        padding: 30px 5%;
+    }
+
+    /* Stack portfolio projects vertically */
+    .projects {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project {
+        width: 90%;
+    }
+}
+/* ================= Contact Buttons ================= */
+.contact-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 12px 25px;
+    background-color: #ff6f61; /* Accent color */
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background-color: #e65b50; /* Darker on hover */
+    transform: translateY(-3px); /* Slight lift on hover */
+}
