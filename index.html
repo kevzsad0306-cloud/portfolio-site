@@ -1,51 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Jhan Kevin – Graphic Designer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Jhan Kevin – Graphic Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap" rel="stylesheet">
+<style>
+/* ================= General ================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* ================= Background Layers ================= */
+.bg-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease, opacity 1s ease;
+    z-index: -2;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    pointer-events: none;
+    z-index: -1;
+    transition: background-color 0.3s ease;
+}
+
+/* ================= Header ================= */
+header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 30px 50px;
+    background-color: rgba(26,26,26,0.8);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    font-family: 'Neonderthaw', cursive;
+    font-size: 4em;
+    color: #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+header p {
+    margin-left: 30px;
+    font-size: 1.2em;
+    color: #fff;
+}
+
+/* ================= Sections ================= */
+section { padding: 60px 10%; min-height: 80vh; }
+h2.section-title { text-align: center; margin-bottom: 50px; color: #fff; }
+.section-intro { max-width: 700px; margin: 0 auto 40px auto; text-align: center; color: #aaa; line-height: 1.5; }
+
+/* ================= Projects Flip-book ================= */
+.projects { display: flex; flex-direction: column; gap: 60px; align-items: center; }
+
+.project {
+    perspective: 1500px;
+    cursor: pointer;
+    min-height: 480px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.project:hover { transform: scale(1.03); }
+
+.book { width: 360px; height: 480px; position: relative; transform-style: preserve-3d; }
+
+.page {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+
+.page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ================= About & Contact ================= */
+#about p, #contact p { max-width: 600px; margin: 0 auto; text-align: center; }
+
+.contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+.btn { text-decoration: none; padding: 12px 25px; background-color: #0ff; color: #111; font-weight: bold; border-radius: 6px; transition: background-color 0.3s, transform 0.3s; }
+.btn:hover { background-color: #0aa; transform: translateY(-3px); }
+
+/* ================= Click Hint ================= */
+.click-hint { text-align: center; font-style: italic; color: #777; margin-top: 15px; }
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+    header h1 { font-size: 3em; }
+    header p { font-size: 1em; }
+    section { padding: 30px 5%; }
+    .book { width: 90%; height: auto; }
+    .projects { gap: 40px; }
+}
+</style>
 </head>
 <body>
 
+<!-- Background layers -->
+<div class="bg-layer" id="bg-layer" style="background-image:url('images/bg-portfolio.png')"></div>
+<div class="bg-overlay" id="bg-overlay"></div>
+
 <header>
     <h1>Jhan Kevin</h1>
-    <p>Graphic Designer|Creating Visual Experience|Collaboration is the Key</p>
+    <p>Graphic Designer | Creating Visual Experience | Collaboration is the Key</p>
 </header>
 
 <section id="portfolio">
-    <h2>My Work</h2>
+    <h2 class="section-title">How I Turn Ideas Into Designs</h2>
+    <p class="section-intro">Click a project to flip through its pages one at a time.</p>
 
-    <div class="projects">
-        <div class="project">
-            <img src="images/project1.jpg" alt="Project 1">
-            <h3>Branding and Logo</h3>
-            <p>Short description of this project.</p>
-        </div>
-
-        <div class="project">
-            <img src="images/project2.jpg" alt="Project 2">
-            <h3>Professional Product Mock up</h3>
-            <p>Short description of this project.</p>
-        </div>
-
-        <div class="project">
-            <img src="images/project3.jpg" alt="Project 3">
-            <h3>Enhanced Photos and Images</h3>
-            <p>Short description of this project.</p>
-        </div>
+    <div class="projects" id="projects-container">
+        <!-- Projects will be generated by JS -->
     </div>
+
+    <p class="click-hint">Click a project to flip one page at a time.</p>
 </section>
 
 <section id="about">
-    <h2>About Me</h2>
-    <p>
-        I am a graphic artist specializing in branding, illustration, and visual design. I create clean, creative, and impactful designs for clients and personal projects.
-    </p>
+    <h2 class="section-title">About Me</h2>
+    <p>I am a graphic artist specializing in branding, illustration, and visual design. I create clean, creative, and impactful designs for clients and personal projects.</p>
 </section>
 
 <section id="contact">
-    <h2>Contact Me</h2>
+    <h2 class="section-title">Contact Me</h2>
     <div class="contact-buttons">
         <a href="mailto:kevzsad@gmail.com" class="btn">Email Me</a>
         <a href="https://www.linkedin.com/in/jhan-kevin-belenzo-1a14373a3/" target="_blank" class="btn">LinkedIn</a>
@@ -54,6 +156,90 @@
     </div>
 </section>
 
+<script>
+// ================= Projects Data =================
+const projectData = [
+    { id: 'project1', pages: 10 },
+    { id: 'project2', pages: 10 },
+    { id: 'project3', pages: 10 }
+];
+
+const projectsContainer = document.getElementById('projects-container');
+
+projectData.forEach((proj, index) => {
+    const projectDiv = document.createElement('div');
+    projectDiv.classList.add('project');
+
+    const bookDiv = document.createElement('div');
+    bookDiv.classList.add('book');
+
+    for(let i = 1; i <= proj.pages; i++){
+        const pageDiv = document.createElement('div');
+        pageDiv.classList.add('page');
+        pageDiv.style.zIndex = proj.pages - i + 1;
+
+        const img = document.createElement('img');
+        // Image filename format: project1-page1.jpg, project2-page5.jpg, etc.
+        img.src = `images/${proj.id}-page${i}.jpg`;
+        img.alt = `${proj.id} Page ${i}`;
+        pageDiv.appendChild(img);
+        bookDiv.appendChild(pageDiv);
+    }
+
+    projectDiv.appendChild(bookDiv);
+    projectsContainer.appendChild(projectDiv);
+
+    // ================= Flip functionality =================
+    let currentPage = 0;
+    const pages = bookDiv.querySelectorAll('.page');
+
+    projectDiv.addEventListener('click', () => {
+        if(currentPage < pages.length){
+            pages[currentPage].style.transform = 'rotateY(-180deg)';
+            pages[currentPage].style.zIndex = pages.length - currentPage - 1;
+            currentPage++;
+        } else {
+            pages.forEach((page,index)=>{
+                page.style.transform='rotateY(0deg)';
+                page.style.zIndex=pages.length - index;
+            });
+            currentPage=0;
+        }
+    });
+});
+
+// ================= Scroll-based background + dark overlay =================
+const bgLayer = document.getElementById('bg-layer');
+const bgOverlay = document.getElementById('bg-overlay');
+
+const sectionBackgrounds = {
+    portfolio: 'images/bg-portfolio.png',
+    about: 'images/bg-about.png',
+    contact: 'images/bg-contact.png'
+};
+
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.body.scrollHeight - window.innerHeight;
+    const scrollFraction = Math.min(scrollTop / docHeight, 1);
+
+    // gradually darken overlay
+    const opacity = 0.3 + scrollFraction * 0.5;
+    bgOverlay.style.backgroundColor = `rgba(0,0,0,${opacity})`;
+
+    // change background per section smoothly
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if(rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2){
+            const id = section.id;
+            if(sectionBackgrounds[id]){
+                bgLayer.style.backgroundImage = `url('${sectionBackgrounds[id]}')`;
+            }
+        }
+    });
+});
+</script>
 
 </body>
 </html>
