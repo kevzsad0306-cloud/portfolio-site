@@ -2,154 +2,112 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
     font-family: 'Montserrat', Arial, sans-serif;
-    background-color: #111;
     color: #fff;
-    scroll-behavior: smooth;
+    overflow-x: hidden;
+    background-color: #111;
+}
+
+/* ================= Background Layers ================= */
+.bg-layer {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover; background-position: center;
+    transition: background-image 1s ease, opacity 1s ease;
+    z-index: -2;
+}
+.bg-overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    pointer-events: none;
+    z-index: -1;
+    transition: background-color 0.3s ease;
 }
 
 /* ================= Header ================= */
 header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    display: flex; justify-content: flex-start; align-items: center;
     padding: 30px 50px;
-    background-color: #1a1a1a;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background-color: rgba(26,26,26,0.8);
+    position: sticky; top: 0; z-index: 1000;
 }
 header h1 {
     font-family: 'Neonderthaw', cursive;
-    font-size: 4em;
-    color: #0ff;
-    text-shadow: 0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 40px #0ff,0 0 80px #0ff;
+    font-size: 4em; color: #0ff;
+    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
 }
 header p {
     margin-left: 30px;
-    font-size: 1.2em;
-    color: #fff;
+    font-size: 1.2em; color: #fff;
 }
-
-/* ================= Hero ================= */
-.hero {
-    width: 100%;
-    height: 60vh;
-    background: url('images/hero.jpg') center/cover no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-}
-.hero h2 {
-    font-size: 3em;
-    color: #0ff;
-    text-shadow: 0 0 10px #0ff,0 0 20px #0ff;
-    opacity: 0;
-    animation: fadeIn 1.5s forwards;
-}
-@keyframes fadeIn { to { opacity: 1; } }
 
 /* ================= Sections ================= */
-section { padding: 60px 10%; }
+section { padding: 60px 10%; min-height: 80vh; }
 h2.section-title { text-align: center; margin-bottom: 50px; color: #fff; }
-.section-intro {
-    max-width: 700px;
-    margin: 0 auto 40px auto;
-    text-align: center;
-    color: #aaa;
-    line-height: 1.5;
-}
+.section-intro { max-width: 700px; margin: 0 auto 40px auto; text-align: center; color: #aaa; line-height: 1.5; }
 
-/* ================= Projects Flip-book ================= */
+/* ================= Projects Flipbook ================= */
 .projects {
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-    align-items: center;
+    display: flex; flex-wrap: wrap; gap: 50px;
+    justify-content: center; align-items: flex-start;
 }
 .project {
-    perspective: 1500px;
+    perspective: 2500px;
     cursor: pointer;
-    min-height: 480px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s;
+    width: 360px; height: 480px;
+    display: flex; justify-content: center; align-items: center;
+    transition: transform 0.3s ease;
 }
-.project:hover { transform: scale(1.03); }
+.project:hover { transform: scale(1.05) rotateZ(1deg); }
+
 .book {
-    width: 360px;
-    height: 480px;
-    position: relative;
-    transform-style: preserve-3d;
+    width: 100%; height: 100%;
+    position: relative; transform-style: preserve-3d;
 }
+
+/* ================= Pages ================= */
 .page {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: absolute; width: 100%; height: 100%;
+    border-radius: 8px; overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    transform-origin: left center;
     backface-visibility: hidden;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-    transform-origin: left;
-    transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+    transform-style: preserve-3d;
+    z-index: 0;
+    cursor: grab; /* corner drag ready */
 }
+.page img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* ================= Page Background with Blend ================= */
-.page-bg {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: rgba(0,0,0,0.3); /* dark overlay */
-    background-blend-mode: overlay;
+/* ================= Page Flip Animations ================= */
+.page.flipping {
+    animation: page-curl 1.5s forwards;
 }
-
-/* ================= Page Shadow ================= */
-.page-shadow {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0));
-    border-radius: 8px;
-    pointer-events: none;
+@keyframes page-curl {
+    0% { transform: rotateY(0deg) skewY(0deg); box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+    20% { transform: rotateY(-40deg) skewY(-5deg); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
+    40% { transform: rotateY(-80deg) skewY(-3deg); box-shadow: 0 10px 25px rgba(0,0,0,0.55); }
+    60% { transform: rotateY(-120deg) skewY(-1deg); box-shadow: 0 12px 30px rgba(0,0,0,0.6); }
+    80% { transform: rotateY(-160deg) skewY(-0.5deg); box-shadow: 0 14px 32px rgba(0,0,0,0.65); }
+    100% { transform: rotateY(-180deg) skewY(0deg); box-shadow: 0 15px 35px rgba(0,0,0,0.7); }
 }
+.page.flipped { transform: rotateY(-180deg); }
 
 /* ================= About & Contact ================= */
 #about p, #contact p { max-width: 600px; margin: 0 auto; text-align: center; }
-.contact-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-.btn {
-    text-decoration: none;
-    padding: 12px 25px;
-    background-color: #0ff;
-    color: #111;
-    font-weight: bold;
-    border-radius: 6px;
-    transition: background-color 0.3s, transform 0.3s;
-}
+.contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+.btn { text-decoration: none; padding: 12px 25px; background-color: #0ff; color: #111; font-weight: bold; border-radius: 6px; transition: background-color 0.3s, transform 0.3s; }
 .btn:hover { background-color: #0aa; transform: translateY(-3px); }
 
 /* ================= Click Hint ================= */
-.click-hint {
-    text-align: center;
-    font-style: italic;
-    color: #777;
-    margin-top: 15px;
-}
+.click-hint { text-align: center; font-style: italic; color: #777; margin-top: 15px; }
 
 /* ================= Responsive ================= */
+@media (max-width: 1024px) { .projects { justify-content: center; gap: 40px; } }
 @media (max-width: 768px) {
     header h1 { font-size: 3em; }
     header p { font-size: 1em; }
     section { padding: 30px 5%; }
-    .book { width: 90%; height: auto; }
-    .projects { gap: 40px; }
+    .projects { flex-direction: column; align-items: center; gap: 40px; }
+    .project { width: 90%; height: auto; }
+    .book { width: 100%; height: auto; }
 }
