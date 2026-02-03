@@ -3,145 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <title>Jhan Kevin – Graphic Designer</title>
-<link href="https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap" rel="stylesheet">
-<style>
-/* ================= General ================= */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    font-family: 'Montserrat', Arial, sans-serif;
-    color: #fff;
-    background-color: #111;
-    overflow-x: hidden;
-}
-
-/* ================= Background ================= */
-.bg-layer {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-size: cover; background-position: center;
-    transition: background-image 1s ease, opacity 1s ease;
-    z-index: -2;
-}
-.bg-overlay {
-    position: fixed; top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.3);
-    pointer-events: none;
-    z-index: -1;
-    transition: background-color 0.3s ease;
-}
-
-/* ================= Header ================= */
-header {
-    display: flex; justify-content: flex-start; align-items: center;
-    padding: 30px 50px;
-    background-color: rgba(26,26,26,0.8);
-    position: sticky; top: 0; z-index: 1000;
-}
-header h1 {
-    font-family: 'Neonderthaw', cursive;
-    font-size: 4em; color: #0ff;
-    text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
-}
-header p {
-    margin-left: 30px;
-    font-size: 1.2em; color: #fff;
-}
-
-/* ================= Sections ================= */
-section { padding: 60px 10%; min-height: 80vh; }
-h2.section-title { text-align: center; margin-bottom: 50px; color: #fff; }
-.section-intro { max-width: 700px; margin: 0 auto 40px auto; text-align: center; color: #aaa; line-height: 1.5; }
-
-/* ================= Projects Flipbook ================= */
-.projects {
-    display: flex; flex-wrap: wrap; gap: 50px;
-    justify-content: center; align-items: flex-start;
-}
-.project {
-    perspective: 2500px;
-    cursor: pointer;
-    width: 360px; height: 480px;
-    display: flex; justify-content: center; align-items: center;
-    transition: transform 0.3s ease;
-}
-.project:hover { transform: scale(1.05) rotateZ(1deg); }
-
-.book {
-    width: 100%; height: 100%;
-    position: relative; transform-style: preserve-3d;
-}
-
-/* ================= Pages ================= */
-.page {
-    position: absolute; width: 100%; height: 100%;
-    border-radius: 8px; overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-    transform-origin: left center;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-    z-index: 0;
-    cursor: grab;
-    transition: transform 1.5s ease-in-out, box-shadow 1.5s ease-in-out;
-}
-.page img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-/* ================= Page Flip Animation ================= */
-.page.flipping {
-    transform: rotateY(-180deg) skewY(-2deg);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-}
-.page.flipped {
-    transform: rotateY(-180deg);
-}
-
-/* ================= About & Contact ================= */
-#about p, #contact p { max-width: 600px; margin: 0 auto; text-align: center; }
-.contact-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
-.btn { text-decoration: none; padding: 12px 25px; background-color: #0ff; color: #111; font-weight: bold; border-radius: 6px; transition: background-color 0.3s, transform 0.3s; }
-.btn:hover { background-color: #0aa; transform: translateY(-3px); }
-
-/* ================= Click Hint ================= */
-.click-hint { text-align: center; font-style: italic; color: #777; margin-top: 15px; }
-
-/* ================= Responsive ================= */
-@media (max-width: 1024px) { .projects { justify-content: center; gap: 40px; } }
-@media (max-width: 768px) {
-    header h1 { font-size: 3em; }
-    header p { font-size: 1em; }
-    section { padding: 30px 5%; }
-    .projects { flex-direction: column; align-items: center; gap: 40px; }
-    .project { width: 90%; height: auto; }
-    .book { width: 100%; height: auto; }
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- BACKGROUND -->
 <div class="bg-layer" id="bg-layer" style="background-image:url('images/bg-portfolio.png')"></div>
 <div class="bg-overlay" id="bg-overlay"></div>
 
+<!-- HEADER -->
 <header>
     <h1>Jhan Kevin</h1>
-    <p>Graphic Designer | Creating Visual Experience | Collaboration is the Key</p>
+    <p>Graphic Designer | Creating Visual Experiences | Collaboration is the Key</p>
 </header>
-
-<section id="portfolio">
-    <h2 class="section-title">How I Turn Ideas Into Designs</h2>
-    <p class="section-intro">Click a project to flip through its pages with realistic curl effect!</p>
-    <div class="projects" id="projects-container"></div>
-    <p class="click-hint">Click a project to flip one page at a time. Last page resets with sound.</p>
+<section id="intro-image">
+    <img src="images/intro.jpg" alt="Intro Visual" class="intro-img">
 </section>
 
+
+<!-- PORTFOLIO FLIPBOOK -->
+<section id="portfolio">
+    <h1 class="section-title">How I Turn Ideas Into Designs</h1>
+    <p class="section-intro">Click the buttons to navigate through the book pages with a realistic flip effect.</p>
+
+    <div class="book-container">
+        <button class="nav-btn" id="prev-page">Prev</button>
+        <div class="book" id="flipbook"></div>
+        <button class="nav-btn" id="next-page">Next</button>
+    </div>
+</section>
+
+<!-- 6 STEPS SECTION -->
+<section id="steps">
+    <h2 class="section-title">My Design Process</h2>
+    <div class="steps-container">
+        <div class="step">
+            <div class="step-circle">1</div>
+            <div class="step-text">Understand the Client and Project</div>
+        </div>
+        <div class="step">
+            <div class="step-circle">2</div>
+            <div class="step-text">Research and Inspiration</div>
+        </div>
+        <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-text">Concept and Sketch</div>
+        </div>
+        <div class="step">
+            <div class="step-circle">4</div>
+            <div class="step-text">Digital Design and Refinement</div>
+        </div>
+        <div class="step">
+            <div class="step-circle">5</div>
+            <div class="step-text">Feedback and Revision</div>
+        </div>
+        <div class="step">
+            <div class="step-circle">6</div>
+            <div class="step-text">Final Delivery</div>
+        </div>
+    </div>
+    <img src="images/steps-image.png" alt="Steps Illustration" class="steps-image">
+</section>
+
+<!-- BRANDING SECTION -->
+<section id="branding">
+    <h2 class="section-title">Branding Projects</h2>
+    <div class="branding-grid">
+        <div class="branding-box"><img src="images/branding-1.jpg" alt="Branding 1"></div>
+        <div class="branding-box"><img src="images/branding-2.jpg" alt="Branding 2"></div>
+        <div class="branding-box"><img src="images/branding-3.jpg" alt="Branding 3"></div>
+        <div class="branding-box"><img src="images/branding-4.jpg" alt="Branding 4"></div>
+        <div class="branding-box"><img src="images/branding-5.jpg" alt="Branding 5"></div>
+        <div class="branding-box"><img src="images/branding-6.jpg" alt="Branding 6"></div>
+        <div class="branding-box"><img src="images/branding-7.jpg" alt="Branding 7"></div>
+        <div class="branding-box"><img src="images/branding-8.jpg" alt="Branding 8"></div>
+    </div>
+</section>
+
+<!-- GALLERY SECTION -->
+<section id="gallery">
+    <h2 class="section-title">Additional Works</h2>
+    <p class="section-intro">
+        These are extra designs I’ve created, displayed as a full collage.
+    </p>
+
+    <div class="gallery-grid">
+        <div class="image-box"><img src="images/gallery-1.jpg" alt="Gallery 1"></div>
+        <div class="image-box"><img src="images/gallery-2.jpg" alt="Gallery 2"></div>
+        <div class="image-box"><img src="images/gallery-3.jpg" alt="Gallery 3"></div>
+        <div class="image-box"><img src="images/gallery-4.jpg" alt="Gallery 4"></div>
+
+        <div class="image-box"><img src="images/gallery-5.jpg" alt="Gallery 5"></div>
+        <div class="image-box"><img src="images/gallery-6.jpg" alt="Gallery 6"></div>
+        <div class="image-box"><img src="images/gallery-7.jpg" alt="Gallery 7"></div>
+        <div class="image-box"><img src="images/gallery-8.jpg" alt="Gallery 8"></div>
+
+        <div class="image-box"><img src="images/gallery-9.jpg" alt="Gallery 9"></div>
+        <div class="image-box"><img src="images/gallery-10.jpg" alt="Gallery 10"></div>
+        <div class="image-box"><img src="images/gallery-11.jpg" alt="Gallery 11"></div>
+        <div class="image-box"><img src="images/gallery-12.jpg" alt="Gallery 12"></div>
+    </div>
+</section>
+
+
+<!-- ABOUT -->
 <section id="about">
     <h2 class="section-title">About Me</h2>
-    <p>I am a graphic artist specializing in branding, illustration, and visual design. I create clean, creative, and impactful designs for clients and personal projects.</p>
-</section>
+    <p>I’m a dedicated and creative Graphic Designer with real-world experience in visual communication, branding, and digital design. With a solid foundation in tools like Adobe Photoshop and Illustrator, I create compelling visuals that help businesses stand out across print and digital platforms. I’ve worked on product labels, posters, mockups, and other design assets, bringing ideas to life with precision, clarity, and purpose. <br><br/> 
 
+My background combines design thinking, content creation, and visual storytelling — allowing me to not only craft eye-catching graphics but also support effective communication for marketing, social media, and branding. I approach every project with attention to detail, a strong sense of organization, and a commitment to delivering work that meets client goals and exceeds expectations.<br><br/>
+
+Whether you need professional print materials like posters and flyers, engaging online visuals for social platforms, or cohesive branding solutions that unify your identity, I partner with you to understand your vision and transform it into effective designs. I’m passionate about improving visual products that connect with audiences and strengthen your brand presence.</section>
+
+<!-- CONTACT -->
 <section id="contact">
     <h2 class="section-title">Contact Me</h2>
     <div class="contact-buttons">
-        <a href="mailto:kevzsad@gmail.com" class="btn">Email Me</a>
+        <a href="mailto:kevzsad@gmail.com" class="btn">Email</a>
         <a href="https://www.linkedin.com/in/jhan-kevin-belenzo-1a14373a3/" target="_blank" class="btn">LinkedIn</a>
         <a href="https://www.behance.net/jhankebelenzo" target="_blank" class="btn">Behance</a>
         <a href="https://www.facebook.com/jk.belsad" target="_blank" class="btn">Facebook</a>
@@ -151,91 +130,6 @@ h2.section-title { text-align: center; margin-bottom: 50px; color: #fff; }
 <audio id="flip-sound" src="sounds/page-flip.mp3"></audio>
 <audio id="reset-sound" src="sounds/reset-flip.mp3"></audio>
 
-<script>
-// ================= Projects Data =================
-const projectData = [
-    { id: 'project1', pages: 10 },
-    { id: 'project2', pages: 10 },
-    { id: 'project3', pages: 10 }
-];
-
-const projectsContainer = document.getElementById('projects-container');
-const flipSound = document.getElementById('flip-sound');
-const resetSound = document.getElementById('reset-sound');
-
-projectData.forEach((proj) => {
-    const projectDiv = document.createElement('div');
-    projectDiv.classList.add('project');
-    const bookDiv = document.createElement('div');
-    bookDiv.classList.add('book');
-
-    for(let i=1; i<=proj.pages; i++){
-        const pageDiv = document.createElement('div');
-        pageDiv.classList.add('page');
-        pageDiv.style.zIndex = proj.pages - i + 1;
-        const img = document.createElement('img');
-        img.src = `images/${proj.id}-page${i}.jpg`;
-        img.alt = `${proj.id} Page ${i}`;
-        pageDiv.appendChild(img);
-        bookDiv.appendChild(pageDiv);
-    }
-
-    projectDiv.appendChild(bookDiv);
-    projectsContainer.appendChild(projectDiv);
-
-    let currentPage = 0;
-    const pages = bookDiv.querySelectorAll('.page');
-
-    projectDiv.addEventListener('click', () => {
-        if(currentPage < pages.length){
-            const page = pages[currentPage];
-            page.classList.add('flipping');
-            setTimeout(()=>{
-                page.classList.add('flipped');
-                page.classList.remove('flipping');
-                flipSound.currentTime = 0;
-                flipSound.play();
-            },50);
-            page.style.zIndex = pages.length - currentPage - 1;
-            currentPage++;
-        } else {
-            pages.forEach((page)=>page.classList.add('flipping'));
-            setTimeout(()=>{
-                pages.forEach(page => page.classList.remove('flipping','flipped'));
-                currentPage = 0;
-                resetSound.currentTime = 0;
-                resetSound.play();
-            },1500);
-        }
-    });
-});
-
-// ================= Scroll-based background =================
-const bgLayer = document.getElementById('bg-layer');
-const bgOverlay = document.getElementById('bg-overlay');
-const sectionBackgrounds = {
-    portfolio: 'images/bg-portfolio.png',
-    about: 'images/bg-about.png',
-    contact: 'images/bg-contact.png'
-};
-window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.body.scrollHeight - window.innerHeight;
-    const scrollFraction = Math.min(scrollTop / docHeight, 1);
-    const opacity = 0.3 + scrollFraction * 0.5;
-    bgOverlay.style.backgroundColor = `rgba(0,0,0,${opacity})`;
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if(rect.top <= window.innerHeight/2 && rect.bottom >= window.innerHeight/2){
-            const id = section.id;
-            if(sectionBackgrounds[id]){
-                bgLayer.style.backgroundImage = `url('${sectionBackgrounds[id]}')`;
-            }
-        }
-    });
-});
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
