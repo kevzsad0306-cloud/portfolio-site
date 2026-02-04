@@ -358,3 +358,55 @@ section {
   }
 
 }
+#floating-balls {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px;
+    background: #000000;
+    overflow: hidden;
+}
+
+.balls-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+/* Generic ball style */
+.ball {
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float linear infinite;
+    transform-style: preserve-3d;
+}
+
+/* Make image cover the entire ball */
+.ball-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Different sizes, positions, and animation durations */
+.ball1 { width: 160px; height: 160px; left: 5%; animation-duration: 12s; }
+.ball2 { width: 180px; height: 180px; left: 20%; animation-duration: 15s; }
+.ball3 { width: 150px; height: 150px; left: 35%; animation-duration: 10s; }
+.ball4 { width: 190px; height: 190px; left: 50%; animation-duration: 18s; }
+.ball5 { width: 170px; height: 170px; left: 65%; animation-duration: 14s; }
+.ball6 { width: 190px; height: 190px; left: 75%; animation-duration: 16s; }
+.ball7 { width: 140px; height: 140px; left: 12%; animation-duration: 20s; }
+.ball8 { width: 160px; height: 160px; left: 45%; animation-duration: 25s; }
+.ball9 { width: 150px; height: 150px; left: 80%; animation-duration: 11s; }
+.ball10{ width: 170px; height: 170px; left: 30%; animation-duration: 19s; }
+
+/* Floating animation */
+@keyframes float {
+    0%   { transform: translateY(400px) rotate(0deg); opacity: 0.7; }
+    50%  { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(360deg); opacity: 0.7; }
+}
